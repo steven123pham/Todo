@@ -1,26 +1,24 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { ClassificationResult } from "../types/types";
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
-import TaskClassifier from "./TaskClassifier";
 
-interface AddbuttonProps {
-  onTaskAdded: () => void;
+interface TaskProps {
+  data: ClassificationResult;
 }
 
-function Addbutton({ onTaskAdded }: AddbuttonProps) {
+function Task({ data }: TaskProps) {
   return (
     <Accordion className="addtask-button" sx={{ backgroundColor: "#d9d9d9" }}>
       <AccordionSummary expandIcon={<ArrowDownwardIcon />}>
-        <Typography component="span">Add Task</Typography>
+        <Typography component="span">{data.description}</Typography>
       </AccordionSummary>
-      <AccordionDetails>
-        <TaskClassifier onTaskAdded={onTaskAdded} />
-      </AccordionDetails>
+      <AccordionDetails>{data.points}</AccordionDetails>
     </Accordion>
   );
 }
 
-export default Addbutton;
+export default Task;

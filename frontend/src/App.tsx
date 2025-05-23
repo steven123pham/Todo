@@ -4,6 +4,7 @@ import TaskClassifier from "./components/TaskClassifier";
 import Addbutton from "./components/addbutton";
 import "./webpage.css";
 import { ClassificationResult } from "./types/types";
+import Task from "./components/Task";
 /*
 Goals
 ---------------------------------------------------------------------------------------------------------
@@ -12,7 +13,7 @@ Goals
 - Create new type that has a check if task is finished
 */
 function App() {
-  const [result, setResult] = useState<ClassificationResult | null[]>([]);
+  const [result, setResult] = useState<ClassificationResult[]>([]);
 
   const getTasks = async () => {
     const response = await fetch("http://localhost:8000/history", {
@@ -25,14 +26,16 @@ function App() {
   };
 
   useEffect(() => {
-    //recieve task whenever it loads the page
     getTasks();
   }, []);
 
   return (
     <div className="body">
-      <div className="todo-body">
-        <Addbutton />
+      <div>
+        <Addbutton onTaskAdded={getTasks} />
+        {result.map((res) => (
+          <Task data={res} key={res.id} />
+        ))}
       </div>
     </div>
   );
